@@ -1,22 +1,45 @@
 package com.revature.sfadapter.util;
 
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SFWSAccessObject {
+
+	@Column(name = "SF_ACCESS_TOKEN", nullable = false)
 	private String accessToken;
+
+	@Column(name="SF_REFRESH_TOKEN")
 	private String refreshToken;
+
+	@Column(name = "SF_INSTANCE_URL", nullable = false)
 	private String instanceUrl;
-	private String userId;
+
+	@Column(name = "SF_USER_URL", nullable = false)
+	private String userUrl;
+
+	@Column(name = "SF_ISSUED_TIME", nullable = false)
 	private String issued;
+
+	@Id
+	@Column(name = "SF_USER_SIG")
 	private String signature;
 	
 	public SFWSAccessObject(){}
 	
-	public SFWSAccessObject(String accessToken, String refreshToken, String instanceUrl, String userId, String issued,
+	public SFWSAccessObject(String accessToken, String refreshToken, String instanceUrl, String userUrl, String issued,
 			String signature) {
 		super();
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
 		this.instanceUrl = instanceUrl;
-		this.userId = userId;
+		this.userUrl = userUrl;
 		this.issued = issued;
 		this.signature = signature;
 	}
@@ -25,6 +48,7 @@ public class SFWSAccessObject {
 		return accessToken;
 	}
 
+	@JsonProperty(value="access_token")
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
@@ -33,6 +57,7 @@ public class SFWSAccessObject {
 		return refreshToken;
 	}
 
+	@JsonProperty(value="refresh_token")
 	public void setRefreshToken(String refreshToken) {
 		this.refreshToken = refreshToken;
 	}
@@ -41,22 +66,25 @@ public class SFWSAccessObject {
 		return instanceUrl;
 	}
 
+	@JsonProperty(value="instance_url")
 	public void setInstanceUrl(String instanceUrl) {
 		this.instanceUrl = instanceUrl;
 	}
 
-	public String getUserId() {
-		return userId;
+	public String getuserUrl() {
+		return userUrl;
 	}
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+	@JsonProperty(value="id")
+	public void setuserUrl(String userUrl) {
+		this.userUrl = userUrl;
 	}
 
 	public String getIssued() {
 		return issued;
 	}
 
+	@JsonProperty(value="issued_at")
 	public void setIssued(String issued) {
 		this.issued = issued;
 	}
@@ -65,9 +93,20 @@ public class SFWSAccessObject {
 		return signature;
 	}
 
+	@JsonProperty(value="signature")
 	public void setSignature(String signature) {
 		this.signature = signature;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "SFWSAccessObject{" +
+				"accessToken='" + accessToken + '\'' +
+				", refreshToken='" + refreshToken + '\'' +
+				", instanceUrl='" + instanceUrl + '\'' +
+				", userUrl='" + userUrl + '\'' +
+				", issued='" + issued + '\'' +
+				", signature='" + signature + '\'' +
+				'}';
+	}
 }
