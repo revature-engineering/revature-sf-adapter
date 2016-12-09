@@ -26,6 +26,9 @@
               limits:
                 cpu: 0.5
                 memory: 800M
+            env:
+            - name: "SF_AD_PORT"
+              value: "80"
 #            livenessProbe:
 #              httpGet:
 #                path: /healthz
