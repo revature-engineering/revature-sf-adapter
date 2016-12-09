@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-
 @Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SFWSAccessObject {
