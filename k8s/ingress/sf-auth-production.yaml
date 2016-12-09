@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: "sf-auth"
+  namespace: "production"
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - sf-auth.revaturelabs.com
+    secretName: sf-auth-production-tls
+  rules:
+  - host: sf-auth.revaturelabs.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sf-auth
+          servicePort: 80
