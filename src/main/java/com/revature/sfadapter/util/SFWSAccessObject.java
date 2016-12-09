@@ -30,11 +30,11 @@ public class SFWSAccessObject {
 	@Id
 	@Column(name = "SF_USER_SIG")
 	private String signature;
-	
+
 	public SFWSAccessObject(){}
-	
+
 	public SFWSAccessObject(String accessToken, String refreshToken, String instanceUrl, String userUrl, String issued,
-			String signature) {
+							String signature) {
 		super();
 		this.accessToken = accessToken;
 		this.refreshToken = refreshToken;
@@ -43,7 +43,7 @@ public class SFWSAccessObject {
 		this.issued = issued;
 		this.signature = signature;
 	}
-	
+
 	public String getAccessToken() {
 		return accessToken;
 	}

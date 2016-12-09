@@ -26,16 +26,16 @@ public class AuthController {
 		Assert.notNull(sfaservice);
 		this.sfaService = sfaservice;
 	}
-	
+
 	@RequestMapping(value="/auth", method=RequestMethod.GET)
 	public ResponseEntity<String> getAuth(@RequestParam(value="redirect_url") String redirectUrl, HttpServletResponse response){
-		
+
 		try{
 			sfaService.sendForAuth(response, redirectUrl);
 		}catch(IOException ex){
 			return new ResponseEntity<>("An error has occurred. Try again later", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		
+
 		return null;
 	}
 

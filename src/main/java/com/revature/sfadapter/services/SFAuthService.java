@@ -35,19 +35,19 @@ public class SFAuthService {
 		Assert.notNull(tokenService);
 		this.tokenService = tokenService;
 	}
-	
+
 	private String getRequestUrl(String clientRedirect){
 		String clientId = System.getenv("SF_CONSUMER_KEY");
-		
+
 		String url = "https://test.salesforce.com/services/oauth2/authorize?response_type=code";
 		url += "&client_id=" + clientId;
 		url += "&redirect_uri=" + URLEncoder.encode("https://sf.aduet.tech/services/authenticate");
 		url+= "&state=" + URLEncoder.encode(clientRedirect);
 		url += "&prompt=login";
-		
+
 		return url;
 	}
-	
+
 	public void sendForAuth(HttpServletResponse response, String clientRedirect) throws IOException{
 		String url = getRequestUrl(clientRedirect);
 		response.sendRedirect(url);
