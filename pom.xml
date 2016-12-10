@@ -47,6 +47,7 @@
     </properties>
     
     <build>
+      <finalName>sf-auth</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

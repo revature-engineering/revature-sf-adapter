@@ -1,0 +1,43 @@
+  apiVersion: extensions/v1beta1
+  kind: Deployment
+  metadata:  
+    name: "sf-auth"
+    labels: 
+      app: "sf-auth"
+      track: "stable"
+  spec: 
+    replicas: 3
+    template: 
+      metadata: 
+        name: "sf-auth"
+        labels: 
+          app: "sf-auth"
+          track: "stable"
+      spec: 
+        containers: 
+          - name: "sf-auth"
+            image: "revature/sf-auth:0.1"
+            ports: 
+              - containerPort: 80
+            resources:
+              requests:
+                cpu: 0.5
+                memory: 800M
+              limits:
+                cpu: 0.5
+                memory: 800M
+            env:
+            - name: "SF_AD_PORT"
+              value: "80"
+#            livenessProbe:
+#              httpGet:
+#                path: /healthz
+#                port: 8080
+#              initialDelaySeconds: 20
+#              timeoutSeconds: 5
+#            readinessProbe:
+#              httpGet:
+#                path: /readiness
+#                port: 8080
+#              initialDelaySeconds: 40
+#              timeoutSeconds: 5
