@@ -1,1 +1,2 @@
 k8s/secrets/db-production.yaml
+k8s/secrets/db-staging.yaml
