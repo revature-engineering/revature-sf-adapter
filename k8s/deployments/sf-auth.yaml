@@ -27,8 +27,21 @@
                 cpu: 0.5
                 memory: 800M
             env:
-            - name: "SF_AD_PORT"
-              value: "80"
+              - name: "DB_URL"
+                valueFrom:
+                  secretKeyRef:
+                    name: "sf-auth-svc-db"
+                    key: "url"
+              - name: "DB_USERNAME"
+                valueFrom:
+                  secretKeyRef:
+                    name: "sf-auth-svc-db"
+                    key: "username"
+              - name: "DB_PASSWORD"
+                valueFrom:
+                  secretKeyRef:
+                    name: "sf-auth-svc-db"
+                    key: "password"
 #            livenessProbe:
 #              httpGet:
 #                path: /healthz
