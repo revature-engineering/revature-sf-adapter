@@ -27,11 +27,11 @@ public class AuthController {
 		this.sfaService = sfaservice;
 	}
 
-	@RequestMapping(value="/auth", method=RequestMethod.GET)
+	@RequestMapping(value="/authorize", method=RequestMethod.GET)
 	public ResponseEntity<String> getAuth(@RequestParam(value="redirect_url") String redirectUrl, HttpServletResponse response){
 
 		try{
-			sfaService.sendForAuth(response, redirectUrl);
+			sfaService.getAuthUrl(redirectUrl);
 		}catch(IOException ex){
 			return new ResponseEntity<>("An error has occurred. Try again later", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -39,7 +39,7 @@ public class AuthController {
 		return null;
 	}
 
-	@RequestMapping(value = "/authenticate")
+	@RequestMapping(value = "/salesforcecallback")
 	public void finishAuth(@RequestParam String code, @RequestParam String state, HttpServletResponse response) throws IOException {
 
 
