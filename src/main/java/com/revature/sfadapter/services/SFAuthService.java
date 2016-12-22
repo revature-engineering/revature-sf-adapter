@@ -1,34 +1,26 @@
 package com.revature.sfadapter.services;
 
-import com.revature.sfadapter.data.services.DaoService;
+
 import com.revature.sfadapter.util.SFWSAccessObject;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.util.Assert;
-import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.util.SystemPropertyUtils;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.RestTemplate;
 
-import javax.print.attribute.standard.Media;
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.net.URLEncoder;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Map;
 
 @Service
 public class SFAuthService {
 
-	private DaoService<SFWSAccessObject, String> tokenService;
 	private static final String clientId;
 	private static final String clientSecret;
 	private static final String authorizationUrl;
@@ -36,22 +28,19 @@ public class SFAuthService {
 
 	static{
 		Map<String, String> env = System.getenv();
-		clientId = env.get("SF_CONSUMER_KEY");
-		clientSecret = env.get("SF_CONSUMER_SECRET");
-		authorizationUrl = env.get("SF_OAUTH_URL");		// *.saleforce.com/
-		myCallbackUrl = env.get("SF_REG_REDIRECT");
+		clientId = env.get("CONSUMER_KEY");
+		clientSecret = env.get("CONSUMER_SECRET");
+		authorizationUrl = env.get("SF_AUTH_SERVER");		// *.saleforce.com/
+		myCallbackUrl = env.get("CALLBACK_URL");
 	}
 
 	private static final Logger LOGGER = Logger.getLogger(SFAuthService.class);
-	@Autowired
-	public void setTokenService(DaoService<SFWSAccessObject, String> tokenService){
-		Assert.notNull(tokenService);
-		this.tokenService = tokenService;
-	}
 
-	private String buildRequestUrl(String endpoint, String clientRedirect){
+	private String buildAuthorizationUrl(String endpoint, String clientRedirect){
 
-		StringBuilder url = new StringBuilder(String.format("%s?response_type=code", authorizationUrl));
+		//StringBuilder url = new StringBuilder(String.format("%s?response_type=code", authorizationUrl));
+		StringBuilder url = new StringBuilder(authorizationUrl.concat(endpoint));
+		url.append("?response_type=code");
 		url.append(String.format("&client_id=%s", clientId));
 		url.append(String.format("&redirect_uri=%s", URLEncoder.encode(myCallbackUrl)));
 		url.append(String.format("&state=%s", URLEncoder.encode(clientRedirect)));
@@ -73,6 +62,7 @@ public class SFAuthService {
 
 	public String getAuthUrl(String clientRedirect) throws IOException{
 		LOGGER.debug("Building url for sales force request");
+		String authUrl = buildAuthorizationUrl("/services/oauth2/authorize", clientRedirect);
 		LOGGER.error("getAuthUrl is incomplete");
 		return null;
 	}
@@ -96,13 +86,8 @@ public class SFAuthService {
 
 		LOGGER.debug("Request ready sending to Salesforce");
 		LOGGER.error("sendForAccess is incomplete");
-		//ResponseEntity<SFWSAccessObject> obj = client.postForEntity(, request, SFWSAccessObject.class);
+		ResponseEntity<SFWSAccessObject> obj = client.postForEntity(authorizationUrl, request, SFWSAccessObject.class);
 		return null;
 
 	}
-
-	public String saveToken(SFWSAccessObject token){
-		return tokenService.saveOne(token).getSignature();
-	}
-
 }

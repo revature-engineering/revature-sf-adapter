@@ -2,6 +2,7 @@ package com.revature.sfadapter.web;
 
 import com.revature.sfadapter.services.SFAuthService;
 import com.revature.sfadapter.util.SFWSAccessObject;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.io.IOException;
 public class AuthController {
 
 	private SFAuthService sfaService;
+	private static final Logger LOGGER = Logger.getLogger(AuthController.class);
 
 	@Autowired
 	public void setSfaService(SFAuthService sfaservice){
@@ -42,24 +44,6 @@ public class AuthController {
 	@RequestMapping(value = "/salesforcecallback")
 	public void finishAuth(@RequestParam String code, @RequestParam String state, HttpServletResponse response) throws IOException {
 
-
-
-		SFWSAccessObject access = sfaService.sendForAccess(code);
-
-		Assert.notNull(access);
-
-		String sig = sfaService.saveToken(access);
-		String url = state.substring(0, state.indexOf("?")+ 1);
-		String qp = state.substring(state.indexOf("?") + 1);
-
-		if(url.length() > 0) {
-			url = url.concat(String.format("token=%s", sig));
-			url = url.concat(String.format("&%s", qp));
-		}else{
-			url = state.concat(String.format("?token=%s", sig));
-		}
-
-		Assert.notNull(sig);
-		response.sendRedirect(url);
+		LOGGER.error("This method is incomplete");
 	}
 }
