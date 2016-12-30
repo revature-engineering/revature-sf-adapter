@@ -8,27 +8,27 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity
+//@Entity
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SFWSAccessObject {
 
-	@Column(name = "SF_ACCESS_TOKEN", nullable = false)
+//	@Column(name = "SF_ACCESS_TOKEN", nullable = false)
 	private String accessToken;
 
-	@Column(name="SF_REFRESH_TOKEN")
+//	@Column(name="SF_REFRESH_TOKEN")
 	private String refreshToken;
 
-	@Column(name = "SF_INSTANCE_URL", nullable = false)
+//	@Column(name = "SF_INSTANCE_URL", nullable = false)
 	private String instanceUrl;
 
-	@Column(name = "SF_USER_URL", nullable = false)
+//	@Column(name = "SF_USER_URL", nullable = false)
 	private String userUrl;
 
-	@Column(name = "SF_ISSUED_TIME", nullable = false)
+//	@Column(name = "SF_ISSUED_TIME", nullable = false)
 	private String issued;
 
-	@Id
-	@Column(name = "SF_USER_SIG")
+//	@Id
+//	@Column(name = "SF_USER_SIG")
 	private String signature;
 
 	public SFWSAccessObject(){}
