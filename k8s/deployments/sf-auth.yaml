@@ -6,7 +6,7 @@
       app: "sf-auth"
       track: "stable"
   spec: 
-    replicas: 3
+    replicas: 1
     template: 
       metadata: 
         name: "sf-auth"
@@ -16,7 +16,7 @@
       spec: 
         containers: 
           - name: "sf-auth"
-            image: "revature/sf-auth:0.1"
+            image: "revature/sf-auth:c63eac7d0a2c9009008f7e6cfbbc0d2743890f8b"
             ports: 
               - containerPort: 80
             resources:
@@ -27,21 +27,26 @@
                 cpu: 0.5
                 memory: 800M
             env:
-              - name: "DB_URL"
+              - name: "SF_AUTH_SERVER"
                 valueFrom:
                   secretKeyRef:
-                    name: "sf-auth-svc-db"
-                    key: "url"
-              - name: "DB_USERNAME"
+                    name: "sf-auth-salesforce"
+                    key: "sfAuthServer"
+              - name: "CONSUMER_KEY"
                 valueFrom:
                   secretKeyRef:
-                    name: "sf-auth-svc-db"
-                    key: "username"
-              - name: "DB_PASSWORD"
+                    name: "sf-auth-salesforce"
+                    key: "consumerKey"
+              - name: "CONSUMER_SECRET"
                 valueFrom:
                   secretKeyRef:
-                    name: "sf-auth-svc-db"
-                    key: "password"
+                    name: "sf-auth-salesforce"
+                    key: "consumerSecret"
+              - name: "CALLBACK_URL"
+                valueFrom:
+                  secretKeyRef:
+                    name: "sf-auth-salesforce"
+                    key: "callbackUrl"
 #            livenessProbe:
 #              httpGet:
 #                path: /healthz
