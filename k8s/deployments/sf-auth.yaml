@@ -16,7 +16,7 @@
       spec: 
         containers: 
           - name: "sf-auth"
-            image: "revature/sf-auth:0.1"
+            image: "revature/sf-auth:c63eac7d0a2c9009008f7e6cfbbc0d2743890f8b"
             ports: 
               - containerPort: 80
             resources:
