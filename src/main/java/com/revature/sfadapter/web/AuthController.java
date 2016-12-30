@@ -41,7 +41,7 @@ public class AuthController {
 		return null;
 	}
 
-	@RequestMapping(value = "/salesforcecallback")
+	@RequestMapping(value = "/salesforceCallback")
 	public void finishAuth(@RequestParam String code, @RequestParam String state, HttpServletResponse response) throws IOException {
 
 		LOGGER.error("This method is incomplete");
