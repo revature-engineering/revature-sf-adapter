@@ -18,7 +18,7 @@
           - name: "sf-auth"
             image: "revature/sf-auth:c63eac7d0a2c9009008f7e6cfbbc0d2743890f8b"
             ports: 
-              - containerPort: 8081
+              - containerPort: 80
             resources:
               requests:
                 cpu: 0.5
